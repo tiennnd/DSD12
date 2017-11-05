@@ -1,0 +1,2 @@
+Dia chi RabbitMQServer: amqp://aaaaaaaaaaaaaaa chu thich amqp://(ten dang nhap vao rabbitmq):(mat khau)@(dia chi ip may)
+Dia chi file log: C:\\aaaaaaaaaaaaaa chu thich: day la dia chi file log cua webserver.

@@ -1,0 +1,3 @@
+Dia chi RabbitMQServer: amqp://tuannmg:123456@192.168.1.23 chu thich amqp://(ten dang nhap vao rabbitmq):(mat khau)@(dia chi ip may)
+Dia chi file log: C:\\wamp64\\logs\\access.log chu thich la dia chi luu file log cua webserver.
+Dia chi database: mongodb://192.168.1.23:27017/pmpt chu thich la dia chi luu co so du lieu.
