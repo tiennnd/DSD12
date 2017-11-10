@@ -2,6 +2,7 @@ var amqp = require('amqplib/callback_api');
 var mongodb = require('mongodb');
 var SHA256 = require("crypto-js/sha256");
 var CryptoJS = require("crypto-js");
+var moment = require('moment');
 
 var MongoClient = mongodb.MongoClient;
 var url = 'mongodb://192.168.1.43:27017/pmpt';
@@ -9,11 +10,12 @@ var db;
 var collection;
 /**
  * Config connection socket.io
+ * change ip socketio for web interface when change ===================>
  */
 var io = require('socket.io-client');
-var socket = io('http://localhost:3000');
+var socket = io('http://192.168.1.43:3000');
     socket.on('connect', function (data) {
-        socket.emit('receive1', 'Hello World from Receive...');
+        // socket.emit('receive1', 'Hello World from Receive...');
         sendSpeedInfo(socket);
     });
 
@@ -23,11 +25,16 @@ var socket = io('http://localhost:3000');
         var speedReceive = countMsgReceive * 1000 / time;
         var speedSaveDB = countMsgSaveDB * 1000 / time;
         // socket.emit('receive1', 'Hello World from Receive...');
-        socket.emit('receive1', speedReceive, speedSaveDB);
+        totalReceiveMessage += countMsgReceive;
+        totalStoreMessage += countMsgSaveDB;
+
+        socket.emit('receive1', speedReceive, totalReceiveMessage, speedSaveDB);
+
         countMsgReceive = 0;
         countMsgSaveDB = 0;
         startTimeCount = Date.now();
         sendSpeedInfo(socket);
+
       }, 500);
     }
 
@@ -46,6 +53,9 @@ MongoClient.connect(url, function (err, db) {
     }
 });
 
+
+var totalReceiveMessage = 0;
+var totalStoreMessage = 0;
 
 
 var countMsgReceive = 0;
@@ -72,6 +82,7 @@ amqp.connect('amqp://tiennd:123456@192.168.1.43', function(err, conn) {
       var oo = JSON.parse(parsedStr);
 
       var hash = SHA256(JSON.stringify(oo.data)+"TienTuanKhiem").toString();
+
       if (hash === oo.sha) {
         // console.log("verify_agent true");
         oo.verify_agent = true;
@@ -82,7 +93,7 @@ amqp.connect('amqp://tiennd:123456@192.168.1.43', function(err, conn) {
       }
 
       oo.machine = "NguyenTienMBP";
-      oo.date_receive = new Date().toLocaleString();
+      oo.date_receive = moment(new Date(), "DD/MM/YYYY").format('YYYY-MM-DD hh:mm:ss');
 
       // save db
       collection.insert (oo, function (error, result) {

@@ -1,0 +1,11 @@
+amqp://tiennd:123456@192.168.1.43
+Agent
+1
+10
+/Applications/XAMPP/xamppfiles/logs/access_log
+TienTuanKhiem
+
+
+/*template path log file*/
+/Applications/XAMPP/xamppfiles/logs
+D:\\xampp\\apache\\logs\\access.log

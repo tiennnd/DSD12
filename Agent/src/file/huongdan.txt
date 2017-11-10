@@ -1,0 +1,11 @@
+sửa file config.txt theo hướng dẫn:
+---------
+dòng 1 => link kết nối
+dòng 2 => Tên File (prefix)
+dòng 3 => vị trí bắt đầu sinh file
+dòng 4 => vị trí kết thúc sinh file
+dòng 5 => đường dẫn tới file log của webserver
+dòng 6 => chuỗi mã hóa log
+----------------------------------------------
+==> chạy file genAgent.jar để sinh nhiều Agent theo file config
+==> chạy file genComand.jar để sinh lệnh khởi động tất cả Agent

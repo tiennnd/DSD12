@@ -4,12 +4,12 @@ var fs = require('fs');
 var readline = require("readline");
 var SHA256 = require("crypto-js/sha256");
 var CryptoJS = require("crypto-js");
+var moment = require('moment');
 
 // log record default
 var mLog = {
   data : {
-    agent_name:"Agent1",
-    isnew: 0,
+    agent_name:"Agent",
     remote_addr: null,
     time_local_log: null,
     method: null,
@@ -42,6 +42,7 @@ function watchFile(filePath) {
 
                    mLog.data.remote_addr = vLog.remote_addr;
                    mLog.data.time_local_log = vLog.time_local;
+                   mLog.data.time_local_log = moment(vLog.time_local, "DD/MM/YYYY").format('YYYY-MM-DD hh:mm:ss');
                    mLog.data.method = vLog.method;
                    mLog.data.path = vLog.path;
                    mLog.data.protocol = vLog.protocol;
@@ -76,21 +77,18 @@ amqp.connect('amqp://tiennd:123456@192.168.1.43', function(err, conn) {
 });
 
 
-var i = 0;
 function sendLogs(stop,ch,queue){
   if(stop === true) {
     console.log("stop..");
     return;
   }
 
-  // var msg = "AgentFromTien1 : msg index = " + (i++);
-  // console.log(msg);
   if(mLog.data.status > -1) {
     console.log(mLog);
   }
 
   // insert date and sha256
-  mLog.data.date_agent = new Date().toLocaleString();
+  mLog.data.date_agent = moment(new Date(), "DD/MM/YYYY").format('YYYY-MM-DD hh:mm:ss');
   mLog.sha = SHA256(JSON.stringify(mLog.data)+"TienTuanKhiem").toString();
   // console.log(JSON.stringify(mLog));
 
@@ -105,11 +103,7 @@ function sendLogs(stop,ch,queue){
   if(mLog.data.status > -1) {
     mLog.data.status = -1;
   }
-  if(i++ < 300000000){
-    setTimeout(sendLogs, 20, false,ch,queue);
-  } else {
-    setTimeout(sendLogs, 20, true,ch,queue);
-  }
+  setTimeout(sendLogs, 1, false,ch,queue);
 }
 
 

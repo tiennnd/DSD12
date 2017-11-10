@@ -35,7 +35,17 @@ var CryptoJS = require("crypto-js");//replace thie with script tag in browser en
 // var decrypted = CryptoJS.TripleDES.decrypt(encrypted, "SecretPassphrase");
 // console.log(decrypted);
 
-var encrypted1 = CryptoJS.AES.encrypt("Message", "Secret Passphrase");
-console.log(encrypted1.toString());
-var decrypted1 = CryptoJS.AES.decrypt(encrypted1, "Secret Passphrase");
-console.log(decrypted1.toString());
+// var encrypted1 = CryptoJS.AES.encrypt("Message", "Secret Passphrase");
+// console.log(encrypted1.toString());
+// var decrypted1 = CryptoJS.AES.decrypt(encrypted1, "Secret Passphrase");
+// console.log(decrypted1.toString());
+
+
+var parse = require('clf-parser');
+var moment = require('moment');
+
+
+var log = "192.168.43.72 - - [27/Oct/2017:14:51:15 +0700] \"GET /dashboard/images/fastly-logo@2x.png HTTP/1.1\" 200 2678";
+var logParse = parse(log);
+var dateStandard = moment(logParse.time_local, "DD/MM/YYYY").format('YYYY-MM-DD hh:mm:ss');
+console.log(dateStandard);

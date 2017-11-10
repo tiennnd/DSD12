@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -19,6 +19,7 @@ var config = {
             //port: 27017, //optiona
             //password: myConst.DB_DOMAIN_PASSWORD, //optional
             database: "pmpt" //optional
+
         }
         // someMongodbServer: {
         //   adapter: 'sails-mongo',
@@ -28,6 +29,9 @@ var config = {
         //   password: 'password', //optional
         //   database: 'your_mongo_db_name_here' //optional
         // },
+    },
+    defaults: {
+        migrate: 'safe',
     }
 };
 

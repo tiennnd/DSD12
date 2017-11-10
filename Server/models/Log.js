@@ -8,6 +8,7 @@ var waterline = require('waterline');
 var Log = waterline.Collection.extend({
     connection: 'default',
     identity: 'log',
+    tableName:'Log',
 
     attributes: {
         connection: 'string',
